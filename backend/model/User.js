@@ -7,7 +7,7 @@ const p = path.join(
   "userToken.json"
 );
 
-const getVideoFromFile = (cb) => {
+const getUserFromFile = (cb) => {
   fs.readFile(p, (err, fileContent) => {
     if (!err) {
       cb(JSON.parse(fileContent));
@@ -17,8 +17,8 @@ const getVideoFromFile = (cb) => {
   });
 };
 
-module.exports = class Video {
+module.exports = class User {
   static fetchAll(cb) {
-    getVideoFromFile(cb);
+    getUserFromFile(cb);
   }
 };

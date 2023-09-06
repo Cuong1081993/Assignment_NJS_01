@@ -9,8 +9,9 @@ const p = path.join(
 
 const getDataFromFile = (cb) => {
   fs.readFile(p, (err, fileContent) => {
-    if (!err) cb(JSON.parse(fileContent));
-    else cb([]);
+    if (!err) {
+      cb(JSON.parse(fileContent));
+    } else cb([]);
   });
 };
 

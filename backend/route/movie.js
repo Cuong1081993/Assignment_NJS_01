@@ -1,15 +1,12 @@
-const path = require("path");
 const express = require("express");
-const pagination = require("../util/paging");
-
-const {
-  getTrendingMovies,
-  getTopRatingMovies,
-} = require("../controller/movie");
-const { isAuthorized } = require("../middleware/authorized");
 const router = express.Router();
 
-router.get("/trending/:token", isAuthorized, getTrendingMovies);
-router.get("/top-rate/:token", isAuthorized, getTopRatingMovies);
+const movieController = require("../controller/movie");
 
+router.get("/trending/", movieController.getTrendingMovies);
+router.get("/top-rate/", movieController.getTopRatingMovies);
+router.get("/discover", movieController.getGenreMovies);
+router.get("/discover/tv", movieController.getMovieByMediaType);
+router.get("/discover/:genreId", movieController.getGenreMovies);
+router.get("/search", movieController.searchMovie);
 module.exports = router;

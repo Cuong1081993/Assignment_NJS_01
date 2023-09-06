@@ -1,18 +1,20 @@
-const Users = require("../model/User");
+const express = require("express");
+const router = express.Router();
+const User = require("../model/User");
 
-module.exports.isAuthorized = (req, res, next) => {
-  Users.fetchAll((users, error) => {
-    const token = req.params.token;
-    if (error) {
-      return next(error);
-    } else {
-      if (users.find((user) => user.token === token)) {
-        return next();
+router.use((req, res, next) => {
+  const tokenId = req.query.token;
+  if (tokenId != undefined) {
+    User.fetchAll((users) => {
+      const user = users.find((user) => user.token === tokenId);
+      if (user) {
+        next();
       } else {
-        let err = new Error("Not Authorized");
-        err.status = 401;
-        return next(err);
+        res.statusMessage = "Unauthorized";
+        res.status(401).end();
       }
-    }
-  });
-};
+    });
+  }
+});
+
+module.exports = router;
